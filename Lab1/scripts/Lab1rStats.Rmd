@@ -14,7 +14,8 @@ library(here)
 library(janitor)
 library(dplyr)
 
-rstats <- import(here("data", "rstats_tweets.rds")
+rstats <- import(here("data", "rstats_tweets.rds"))
+View(rstats)
 ```
 
 ## R Markdown
