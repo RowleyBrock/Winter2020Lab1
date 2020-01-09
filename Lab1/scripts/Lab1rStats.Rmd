@@ -10,20 +10,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r load}
+library(tidyverse)
 library(rio)
+library(lubridate)
 library(here)
-library(janitor)
 library(dplyr)
 library(forcats)
-library(tidyverse)
 
-rstats <- import(here("data", "rstats_tweets.rds"))
+rstats <- rio::import(here::here("data", "rstats_tweets.rds"))
 View(rstats)
 ```
 
-```{r}
+```{r commit2}
 
-rstats <- rstats %>% 
+rstats_count <- rstats %>% 
   select(screen_name, created_at, status_id) %>% 
   # mutate(status_id = as.numeric(status_id)) %>% 
   # group_by(screen_name) %>% 
@@ -32,12 +32,29 @@ rstats <- rstats %>%
   mutate(screen_name = as.factor(screen_name)) %>% 
   slice(1:25)
 
-rstats2 <- rstats %>% 
+rstats2 <- rstats_count %>% 
   mutate(screen_name = fct_reorder(screen_name, n))
   
 ggplot(rstats2, aes(screen_name, n)) +
   geom_col() +
   coord_flip()
+```
+
+```{r commit4}
+# First create a month variable that rounds the created_at column to the nearest month. You might consider lubridate::round_date.
+# Restrict the count to prior to 2019. I would recommend using lubridate::as_datetime("2019-01-01 00:00:00"), or just restricting the x-axis through ggplot
+# Count the number of rows (tweets) in the dataset for each month
+
+month_rstats <- rstats %>%
+  mutate(month = round_date(created_at, "month")) %>%
+  filter(month < as_datetime("2019-01-01 00:00:00")) %>% 
+  count(month)
+
+ggplot(month_rstats, aes(month, n)) +
+  geom_line() +
+  geom_smooth()
+```
+```{r commit5}
 
 ```
 
