@@ -41,10 +41,6 @@ ggplot(rstats2, aes(screen_name, n)) +
 ```
 
 ```{r commit4}
-# First create a month variable that rounds the created_at column to the nearest month. You might consider lubridate::round_date.
-# Restrict the count to prior to 2019. I would recommend using lubridate::as_datetime("2019-01-01 00:00:00"), or just restricting the x-axis through ggplot
-# Count the number of rows (tweets) in the dataset for each month
-
 month_rstats <- rstats %>%
   mutate(month = round_date(created_at, "month")) %>%
   filter(month < as_datetime("2019-01-01 00:00:00")) %>% 
@@ -54,7 +50,20 @@ ggplot(month_rstats, aes(month, n)) +
   geom_line() +
   geom_smooth()
 ```
+
 ```{r commit5}
 
-```
+month_rstats <- rstats %>%
+  mutate(month = round_date(created_at, "month")) %>%
+  filter(month < as_datetime("2019-01-01 00:00:00")) %>% 
+  count(month)
 
+ggplot(month_rstats, aes(month, n)) +
+  geom_line() +
+  geom_smooth() +
+   geom_ribbon(aes(ymin = 0, ymax = n), fill = "#AFDDF5", alpha = .5) +
+  labs(x = "Year (data summarized by month)", 
+       y = "Number of #stats tweets", 
+       title = "Growth of the #rstats hashtag on twitter over time", 
+       caption = "Data from Mike Kearny, distributed via #tidytuesday")
+```
