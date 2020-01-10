@@ -23,16 +23,16 @@ rstats <- rio::import(
 ```
 
 ```{r commit2}
-rstats_count <- rstats %>% 
+rstats_count <- rstats %>%
   select(screen_name,
          created_at,
-         status_id) %>% 
-  count(screen_name) %>% 
-  arrange(desc(n)) %>% 
-  mutate(screen_name = as.factor(screen_name)) %>% 
+         status_id) %>%
+  count(screen_name) %>%
+  arrange(desc(n)) %>%
+  mutate(screen_name = as.factor(screen_name)) %>%
   slice(1:25)
 
-rstats2 <- rstats_count %>% 
+rstats2 <- rstats_count %>%
   mutate(screen_name = fct_reorder(screen_name, n))
   
 name_graph <- ggplot(rstats2, aes(screen_name, n)) +
@@ -47,9 +47,9 @@ name_graph +
 name_graph +
   geom_col(fill = "#7CA0E9", alpha = .8) +
   theme_minimal() +
-  labs(x = "Twitter Screen Name", 
-       y = "Count", 
-       title = "Most prolific #rstats tweeters", 
+  labs(x = "Twitter Screen Name",
+       y = "Count",
+       title = "Most prolific #rstats tweeters",
        subtitle = "Top 25 screen names displayed",
        caption = "Data from Mike Kearny, distributed via #tidytuesday")
 ```
@@ -57,25 +57,25 @@ name_graph +
 ```{r commit4}
 month_rstats <- rstats %>%
   mutate(month = round_date(created_at, "month")) %>%
-  filter(month < as_datetime("2019-01-01 00:00:00")) %>% 
+  filter(month < as_datetime("2019-01-01 00:00:00")) %>%
   count(month)
 
 month_graph <- ggplot(month_rstats, aes(month, n)) +
   geom_line()
   
-month_graph 
+month_graph
 ```
 
 ```{r commit5}
 month_graph +
-   geom_ribbon(aes(ymin = 0, ymax = n), 
-               fill = "#D3DFF8", 
+   geom_ribbon(aes(ymin = 0, ymax = n),
+               fill = "#D3DFF8",
                alpha = .5) +
-  geom_smooth(se = FALSE, 
+  geom_smooth(se = FALSE,
               color = "#EB57F8") +
   theme_minimal() +
-  labs(x = "Year (data summarized by month)", 
-       y = "Number of #stats tweets", 
-       title = "Growth of the #rstats hashtag on twitter over time", 
+  labs(x = "Year (data summarized by month)",
+       y = "Number of #stats tweets",
+       title = "Growth of the #rstats hashtag on twitter over time",
        caption = "Data from Mike Kearny, distributed via #tidytuesday")
 ```
