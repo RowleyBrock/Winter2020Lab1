@@ -17,15 +17,16 @@ library(here)
 library(dplyr)
 library(forcats)
 
-rstats <- rio::import(here::here("data", "rstats_tweets.rds"))
-View(rstats)
+rstats <- rio::import(
+  here::here("data", "rstats_tweets.rds")
+  )
 ```
 
 ```{r commit2}
 rstats_count <- rstats %>% 
-  select(screen_name, created_at, status_id) %>% 
-  # mutate(status_id = as.numeric(status_id)) %>% 
-  # group_by(screen_name) %>% 
+  select(screen_name,
+         created_at,
+         status_id) %>% 
   count(screen_name) %>% 
   arrange(desc(n)) %>% 
   mutate(screen_name = as.factor(screen_name)) %>% 
@@ -48,7 +49,8 @@ name_graph +
   theme_minimal() +
   labs(x = "Twitter Screen Name", 
        y = "Count", 
-       title = "Most prolific #rstats tweeters", subtitle = "Top 25 screen names displayed",
+       title = "Most prolific #rstats tweeters", 
+       subtitle = "Top 25 screen names displayed",
        caption = "Data from Mike Kearny, distributed via #tidytuesday")
 ```
 
@@ -66,8 +68,11 @@ month_graph
 
 ```{r commit5}
 month_graph +
-   geom_ribbon(aes(ymin = 0, ymax = n), fill = "#D3DFF8", alpha = .5) +
-  geom_smooth(se = FALSE, color = "#EB57F8") +
+   geom_ribbon(aes(ymin = 0, ymax = n), 
+               fill = "#D3DFF8", 
+               alpha = .5) +
+  geom_smooth(se = FALSE, 
+              color = "#EB57F8") +
   theme_minimal() +
   labs(x = "Year (data summarized by month)", 
        y = "Number of #stats tweets", 
