@@ -34,11 +34,11 @@ rstats_count <- rstats %>%
 
 rstats2 <- rstats_count %>%
   mutate(screen_name = fct_reorder(screen_name, n))
-  
+
 name_graph <- ggplot(rstats2, aes(screen_name, n)) +
   #geom_col() +
   coord_flip()
-  
+
 name_graph +
   geom_col()
 ```
@@ -62,7 +62,7 @@ month_rstats <- rstats %>%
 
 month_graph <- ggplot(month_rstats, aes(month, n)) +
   geom_line()
-  
+
 month_graph
 ```
 
