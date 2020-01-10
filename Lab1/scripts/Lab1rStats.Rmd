@@ -62,6 +62,7 @@ ggplot(month_rstats, aes(month, n)) +
   geom_line() +
   geom_smooth() +
    geom_ribbon(aes(ymin = 0, ymax = n), fill = "#AFDDF5", alpha = .5) +
+  theme_minimal() +
   labs(x = "Year (data summarized by month)", 
        y = "Number of #stats tweets", 
        title = "Growth of the #rstats hashtag on twitter over time", 
