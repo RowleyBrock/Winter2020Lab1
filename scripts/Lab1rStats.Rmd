@@ -28,9 +28,9 @@ rstats <- rio::import(
 
 ```{r commit2}
 rstats_count <- rstats %>%
-  select(screen_name,
-         created_at,
-         status_id) %>%
+  # select(screen_name,
+  #        created_at,
+  #        status_id) %>% # Not really needed
   count(screen_name) %>%
   arrange(desc(n)) %>%
   mutate(screen_name = as.factor(screen_name)) %>%
@@ -48,11 +48,14 @@ name_graph +
 ```
 
 ```{r commit3}
+# I did some super minor code styling below. Also as you start to build up a 
+# theme, you might consider starting with a them that is close. I generally
+# start with theme_minimal() and then modify from there.
 name_graph +
   geom_col(fill = "#6699FF", alpha = .8) +
-    theme(panel.grid.major.y = element_blank() ,
-           panel.grid.major.x = element_line( size=.1, color="grey"),
-          panel.background = element_rect(fill = "white", colour = "grey50")) + 
+  theme(panel.grid.major.y = element_blank() ,
+        panel.grid.major.x = element_line(size = .1, color = "grey"),
+        panel.background = element_rect(fill = "white", colour = "grey50")) + 
   labs(x = "Twitter Screen Name",
        y = "Count",
        title = "Most prolific #rstats tweeters",
@@ -71,21 +74,27 @@ month_graph <- ggplot(month_rstats, aes(month, n)) +
 
 month_graph +
   geom_smooth()
-
 ```
 
 ```{r commit5}
+# Minor code styling added to the below too. Try to stay consistent on whether
+# arguments are going to appear on the same line or new lines. I recommend 
+# generally going to new lines because you definitely don't want any single
+# line spilling over more than 80 characters. You can setup rulers in your
+# editor to help with that too.
 month_graph +
-   geom_ribbon(aes(ymin = 0, ymax = n),
-               fill = "#D3DFF8",
-               alpha = .75)  +
-  geom_line(linetype = "solid", size = 1, color = "grey40") +
-  geom_smooth(method = loess, se = FALSE, 
+  geom_ribbon(aes(ymin = 0, ymax = n),
+              fill = "#D3DFF8",
+              alpha = .75)  +
+  geom_line(linetype = "solid", 
+            size = 1, 
+            color = "grey40") +
+  geom_smooth(method = loess, 
+              se = FALSE, 
               color = "#EB57F8") +
   theme_minimal() +
   labs(x = "Year (data summarized by month)",
        y = "Number of #stats tweets",
        title = "Growth of the #rstats hashtag on twitter over time",
        caption = "Data from Mike Kearny, distributed via #tidytuesday")
-
 ```
