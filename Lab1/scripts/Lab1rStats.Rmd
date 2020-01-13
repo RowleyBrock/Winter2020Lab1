@@ -6,7 +6,11 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
 ```
 
 ```{r load}
@@ -75,7 +79,7 @@ month_graph +
                fill = "#D3DFF8",
                alpha = .75)  +
   geom_line(linetype = "solid", size = 1, color = "grey40") +
-  geom_smooth(method = loess, se = FALSE,
+  geom_smooth(method = loess, se = FALSE, span = 1, 
               color = "#EB57F8") +
   theme_minimal() +
   labs(x = "Year (data summarized by month)",
