@@ -45,8 +45,10 @@ name_graph +
 
 ```{r commit3}
 name_graph +
-  geom_col(fill = "#7CA0E9", alpha = .8) +
-  theme_minimal() +
+  geom_col(fill = "#6699FF", alpha = .8) +
+    theme(panel.grid.major.y = element_blank() ,
+           panel.grid.major.x = element_line( size=.1, color="grey"),
+          panel.background = element_rect(fill = "white", colour = "grey50")) + 
   labs(x = "Twitter Screen Name",
        y = "Count",
        title = "Most prolific #rstats tweeters",
