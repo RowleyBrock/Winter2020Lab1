@@ -73,8 +73,9 @@ month_graph
 month_graph +
    geom_ribbon(aes(ymin = 0, ymax = n),
                fill = "#D3DFF8",
-               alpha = .5) +
-  geom_smooth(se = FALSE,
+               alpha = .75)  +
+  geom_line(linetype = "solid", size = 1, color = "grey40") +
+  geom_smooth(method = loess, se = FALSE,
               color = "#EB57F8") +
   theme_minimal() +
   labs(x = "Year (data summarized by month)",
