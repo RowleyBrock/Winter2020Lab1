@@ -67,10 +67,11 @@ month_rstats <- rstats %>%
   count(month)
 
 month_graph <- ggplot(month_rstats, aes(month, n)) +
-  geom_line() +
+  geom_line() 
+
+month_graph +
   geom_smooth()
 
-month_graph
 ```
 
 ```{r commit5}
@@ -79,11 +80,12 @@ month_graph +
                fill = "#D3DFF8",
                alpha = .75)  +
   geom_line(linetype = "solid", size = 1, color = "grey40") +
-  geom_smooth(method = loess, se = FALSE, span = 1, 
+  geom_smooth(method = loess, se = FALSE, 
               color = "#EB57F8") +
   theme_minimal() +
   labs(x = "Year (data summarized by month)",
        y = "Number of #stats tweets",
        title = "Growth of the #rstats hashtag on twitter over time",
        caption = "Data from Mike Kearny, distributed via #tidytuesday")
+
 ```
