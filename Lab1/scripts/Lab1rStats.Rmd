@@ -63,7 +63,8 @@ month_rstats <- rstats %>%
   count(month)
 
 month_graph <- ggplot(month_rstats, aes(month, n)) +
-  geom_line()
+  geom_line() +
+  geom_smooth()
 
 month_graph
 ```
